@@ -4,8 +4,33 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic'])
-
-.run(function($ionicPlatform) {
+.config(function($stateProvider, $urlRouterProvider) {
+ 
+  $stateProvider
+  .state('outside', {
+    url: '/outside',
+    abstract: true,
+    templateUrl: 'templates/outside.html'
+  })
+  .state('outside.login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  })
+  .state('outside.register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'RegisterCtrl'
+  })
+  .state('inside', {
+    url: '/inside',
+    templateUrl: 'templates/inside.html',
+    controller: 'InsideCtrl'
+  });
+ 
+  $urlRouterProvider.otherwise('/outside/login');
+})
+.run(function($ionicPlatform, $rootScope, $state, AuthService, AUTH_EVENTS) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -14,6 +39,15 @@ angular.module('starter', ['ionic'])
     }
     if(window.StatusBar) {
       StatusBar.styleDefault();
+    }
+  });
+  $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
+    if (!AuthService.isAuthenticated()) {
+      console.log(next.name);
+      if (next.name !== 'outside.login' && next.name !== 'outside.register') {
+        event.preventDefault();
+        $state.go('outside.login');
+      }
     }
   });
 })

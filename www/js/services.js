@@ -1,7 +1,7 @@
 angular.module('starter')
  
 .service('AuthService', function($q, $http, API_ENDPOINT) {
-  var LOCAL_TOKEN_KEY = 'yourTokenKey';
+  var LOCAL_TOKEN_KEY = 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1NjU1NDIxNWE0NmQyMzdlNjVjNTAzMzIiLCJuYW1lIjoiYm5pY2FydCIsInBhc3N3b3JkIjoiJDJhJDEwJFB5dkdHMlBXbzFDRmNrWWEuNGdSTXVzVzJOZ2EuYkgxYVZTNmI3MERqSGpKWVh2SW9XUTcyIiwiX192IjowfQ.aSvMFVLi8GgVnzdEwU1zkpN5bBimrnX9LaP9tQR0BYU';
   var isAuthenticated = false;
   var authToken;
  
